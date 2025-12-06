@@ -26,13 +26,13 @@ starts = []
 for i in range(len(initialOperators)):
     if initialOperators[i] != " ":
         starts.append(i)
-print(starts, len(initialOperators))
+
 for i in range(len(starts)):
     if i < len(starts) - 1:
         numbersCount = starts[i + 1] - starts[i] - 1
     else:
         numbersCount = len(initialOperators) - starts[i]
-    print(numbersCount)
+    
     numbersFinal = []
     for j in range(numbersCount):
         numbersFinal.append(initialNumber1[starts[i] + j] + initialNumber2[starts[i] + j] + initialNumber3[starts[i] + j] + initialNumber4[starts[i] + j])
@@ -49,7 +49,7 @@ for i in range(len(starts)):
                 resultTemp *= numbersFinal[j]
 
     result += resultTemp
-    print(resultTemp)
+    
 
 print(result)
 

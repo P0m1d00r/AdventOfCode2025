@@ -4,53 +4,61 @@ with open("input.txt", "r", encoding = "utf-8") as file:
 
 result = 0
 
-initialNumber1 = data[0].split(" ")
-number1 = initialNumber1[:]
+initialNumber1 = list(data[0])
+initialNumber2 = list(data[1])
+initialNumber3 = list(data[2])
+initialNumber4 = list(data[3])
+initialOperators = list(data[4])
 
-for i in range(len(initialNumber1) - 1, -1 ,-1):
-    if number1[i] == "":
-        number1.pop(i)
+for i in range(len(initialNumber1) - 1, -1, -1):
+    if initialNumber1[i] == " ":
+        initialNumber1[i] = ""
+    if initialNumber2[i] == " ":
+        initialNumber2[i] = ""
+    if initialNumber3[i] == " ":
+        initialNumber3[i] = ""
+    if initialNumber4[i] == " ":
+        initialNumber4[i] = ""
+
+
+starts = []
+
+for i in range(len(initialOperators)):
+    if initialOperators[i] != " ":
+        starts.append(i)
+print(starts, len(initialOperators))
+for i in range(len(starts)):
+    if i < len(starts) - 1:
+        numbersCount = starts[i + 1] - starts[i] - 1
     else:
-        number1[i] = int(number1[i])
+        numbersCount = len(initialOperators) - starts[i]
+    print(numbersCount)
+    numbersFinal = []
+    for j in range(numbersCount):
+        numbersFinal.append(initialNumber1[starts[i] + j] + initialNumber2[starts[i] + j] + initialNumber3[starts[i] + j] + initialNumber4[starts[i] + j])
+        numbersFinal[j] = int(numbersFinal[j])
 
-initialNumber2 = data[1].split(" ")
-number2 = initialNumber2[:]
-
-for i in range(len(initialNumber2) - 1, -1 ,-1):
-    if number2[i] == "":
-        number2.pop(i)
-    else:
-        number2[i] = int(number2[i])
-
-initialNumber3 = data[2].split(" ")
-number3 = initialNumber3[:]
-
-for i in range(len(initialNumber3) - 1, -1 ,-1):
-    if number3[i] == "":
-        number3.pop(i)
-    else:
-        number3[i] = int(number3[i])
-
-initialNumber4 = data[3].split(" ")
-number4 = initialNumber4[:]
-
-for i in range(len(initialNumber4) - 1, -1 ,-1):
-    if number4[i] == "":
-        number4.pop(i)
-    else:
-        number4[i] = int(number4[i])
-
-initialOperators = data[4].split(" ")
-operators = initialOperators[:]
-for i in range(len(initialOperators) - 1, -1 ,-1):
-    if operators[i] == "":
-        operators.pop(i)
-
-for i in range(len(number1)):
-    match operators[i]:
+    match initialOperators[starts[i]]:
         case "+":
-            result += number1[i] + number2[i] + number3[i] + number4[i]
+            resultTemp = 0
+            for j in range(len(numbersFinal)):
+                resultTemp += numbersFinal[j]
         case "*":
-            result += number1[i] * number2[i] * number3[i] * number4[i]
+            resultTemp = 1
+            for j in range(len(numbersFinal)):
+                resultTemp *= numbersFinal[j]
+
+    result += resultTemp
+    print(resultTemp)
 
 print(result)
+
+
+
+
+
+
+
+
+
+

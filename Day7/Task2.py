@@ -4,30 +4,19 @@ with open("input.txt", "r", encoding = "utf-8") as file:
     data = file.read().splitlines()
 
 result = 0
-beams = [data[0].index('S')]
+
 beamsCount = defaultdict(int)
-beamsCount[beams[0]] = 1
+beamsCount[data[0].index('S')] = 1
+linelength = len(data[0])
 
 for lineIndex in range(1, len(data)):
-    for letterIndex in range(len(data[lineIndex])):
-        if data[lineIndex][letterIndex] == "^" and letterIndex in beams:
-            beams.append(letterIndex + 1)
-            beams.append(letterIndex - 1)
-            beams.remove(letterIndex)
-
+    for letterIndex in range(linelength):
+        if data[lineIndex][letterIndex] == "^" and beamsCount[letterIndex] > 0:
             beamsCount[letterIndex - 1] += beamsCount[letterIndex]
             beamsCount[letterIndex + 1] += beamsCount[letterIndex]
             beamsCount[letterIndex] = 0
 
 
-    beamsTemp = []
-
-    for beam in beams:
-        if beam not in beamsTemp:
-            beamsTemp.append(beam)
-
-    beams = beamsTemp[:]
-
-for i in beams:
+for i in range(len(data[0])):
     result += beamsCount[i]
 print(result)
